@@ -16,7 +16,7 @@ USER $NB_UID
 ENV MINIZINC_DIR=/opt/MiniZincIDE-2.2.3-bundle-linux
 ENV PATH=$MINIZINC_DIR/bin:$PATH 
 
-RUN conda install --quiet --yes xlrd xlwt plotly
+RUN conda install --quiet --yes xlrd xlwt openpyxl plotly
 
 # -U is upgrade --user installs it for the current user. 
 RUN pip install -U iminizinc   

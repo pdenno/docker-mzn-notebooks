@@ -5,6 +5,8 @@ LABEL maintainer="https://github.com/pdenno"
 
 USER root
 
+RUN apt install libqt5printsupport5
+
 RUN cd /opt && \
     wget https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz && \
     tar xzf MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz && \

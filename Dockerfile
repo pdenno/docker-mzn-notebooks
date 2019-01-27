@@ -5,7 +5,13 @@ LABEL maintainer="https://github.com/pdenno"
 
 USER root
 
-RUN apt install libqt5printsupport5
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y software-properties-common
+# RUN add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu/ bionic universe multiverse"
+# RUN add-apt-repository "deb http://us.archive.ubuntu.com/ubuntu/ bionic-updates universe multiverse"
+
+RUN apt-get install -y libqt5printsupport5
 
 RUN cd /opt && \
     wget https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz && \
@@ -21,6 +27,4 @@ ENV PATH=$MINIZINC_DIR/bin:$PATH
 RUN conda install --quiet --yes xlrd xlwt openpyxl plotly
 
 # -U is upgrade --user installs it for the current user. 
-RUN pip install -U iminizinc   
-
-
+RUN pip install -U iminizinc

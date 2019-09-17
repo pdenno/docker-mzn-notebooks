@@ -6,4 +6,4 @@
 #  pip install -i https://test.pypi.org/simple/ nba_gateway-pdenno
 
 cp ~/Documents/git/nb-agent/target/uberjar/nb-agent.jar .
-docker build -t mzn-notebooks .
+docker build -t podenno/mzn-notebook .

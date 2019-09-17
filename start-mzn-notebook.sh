@@ -2,7 +2,7 @@
 
 docker run -it \
     --log-opt max-size=50m \
-    -p 8888:8888 -p 3000:3000 -p 7000:7000 \
+    -p 8889:8889 -p 3001:3001 -p 7001:7001 \
     -e DOCKER_USER=`id -un` \
     -e DOCKER_USER_ID=`id -u` \
     -e DOCKER_PASSWORD=`id -un` \

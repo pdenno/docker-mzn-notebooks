@@ -3,11 +3,11 @@ FROM dclong/jupyterlab
 LABEL maintainer="https://github.com/pdenno"
 
 USER root
-
-RUN mkdir -p /opt/nb-agent 
-# Seems like it likes it to be local.
-ADD nb-agent.jar /opt/nb-agent
 EXPOSE 3001 7001 8889 
+
+# POD how do you ADD from elsewhere? 
+RUN mkdir -p /opt/nb-agent 
+ADD nb-agent.jar /opt/nb-agent
 
 RUN apt-get update
 RUN apt-get install -y apt-utils
@@ -15,14 +15,16 @@ RUN apt-get install -y software-properties-common
 RUN apt-get install wget 
 RUN apt-get install -y libqt5printsupport5
 
+# MiniZinc
 RUN cd /opt && \
     wget -nv https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz && \
     tar xzf MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz && \
     rm MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz
 
 ENV MINIZINC_DIR=/opt/MiniZincIDE-2.2.3-bundle-linux
-ENV PATH=$MINIZINC_DIR/bin:$PATH
+ENV MINIZINC_BIN=/opt/MiniZincIDE-2.2.3-bundle-linux/bin
 
+# Python for scheduling notebooks and nb-agent
 RUN pip3 install --upgrade pip
 RUN pip3 install pandas numpy pandoc 
 RUN pip3 install xlrd xlwt openpyxl plotly
@@ -42,13 +44,14 @@ RUN curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
     tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
     rm -rf /tmp/openjdk.tar.gz;
 
-ENV JAVA_HOME=/opt/java/openjdk \
-    PATH="/opt/java/openjdk/bin:$PATH"
+ENV JAVA_HOME=/opt/java/openjdk
+ENV JAVA_BIN=/opt/java/openjdk/bin
+# Currently not very useful because running as $DOCKER_USER.
+ENV PATH=$MINIZINC_BIN:$JAVA_BIN:$PATH
 
-# clojure - maybe not needed since I have the .jar, but I've come this far...
+# clojure - useful for working on the repl-server (7001)
 RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -O /usr/bin/lein && chmod +x /usr/bin/lein
 RUN lein self-install
 
-# Modified from dclong (Go get these!) <=======================================
 COPY scripts /scripts
 COPY settings /settings

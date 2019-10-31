@@ -29,8 +29,9 @@ RUN pip3 install --upgrade pip
 RUN pip3 install pandas numpy pandoc 
 RUN pip3 install xlrd xlwt openpyxl plotly
 RUN pip3 install python-gantt
-RUN pip3 install mznb-pdenno
-RUN pip3 install nba-gateway-pdenno
+RUN pip3 install --index-url https://test.pypi.org/simple/ mznb-pdenno
+RUN pip3 install --index-url https://test.pypi.org/simple/ nba-gateway-pdenno
+RUN pip3 install ast2json
 
 # java https://github.com/AdoptOpenJDK/openjdk-docker/blob/master/8/jdk/debian/Dockerfile.hotspot.releases.full
 ENV JAVA_VERSION=jdk8u22

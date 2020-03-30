@@ -9,4 +9,4 @@ docker run -it \
     -e DOCKER_GROUP_ID=`id -g` \
     -v `pwd`:/workdir \
     -v `dirname $HOME`:/home_host \
-    podenno/mzn-notebook
+    podenno/mzn-notebook /scripts/sys/init.sh

@@ -1,2 +1,2 @@
 # mzn-notebooks-docker
-Dockerfiles for MiniZinc Jupyter Notebooks
+Dockerfile for MiniZinc Jupyter Notebooks
